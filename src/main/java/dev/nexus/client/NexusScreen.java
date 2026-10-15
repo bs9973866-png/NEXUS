@@ -5,6 +5,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
+import net.minecraft.text.StyleSpriteSource;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public final class NexusScreen extends Screen {
         field.setEditableColor(0xFFF0EAF2);
         field.setUneditableColor(0xFFAAA3B0);
         field.setTextShadow(true);
-        field.setPlaceholder(Text.literal(placeholder).styled(style -> style.withFont(UI_FONT)));
+        field.setPlaceholder(Text.literal(placeholder).styled(style -> style.withFont(new StyleSpriteSource.Font(UI_FONT))));
         addDrawableChild(field);
         return field;
     }
