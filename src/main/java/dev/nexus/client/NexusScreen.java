@@ -201,6 +201,7 @@ public final class NexusScreen extends Screen {
         String username = MinecraftClient.getInstance().getSession().getUsername();
         text(context, username, panelX + panelW - 112, panelY + 32, MUTED, false);
         context.fill(contentX, panelY + 47, panelX + panelW - 16, panelY + 48, 0xFF30232D);
+        renderInputSurfaces(context);
 
         switch (page) {
             case HOME -> renderHome(context);
@@ -222,8 +223,8 @@ public final class NexusScreen extends Screen {
 
     private void renderHome(DrawContext context) {
         int x = contentX, y = contentY + 3;
-        context.fill(x, y, x + contentW, y + 63, 0xFF21151F);
-        context.fill(x, y, x + 3, y + 63, RED);
+        context.fill(x, y, x + contentW, y + 48, 0xFF21151F);
+        context.fill(x, y, x + 3, y + 48, RED);
         text(context, NexusData.t("YOUR PEOPLE. YOUR WORLD.", "ТВОИ ДРУЗЬЯ. ТВОЙ МИР."), x + 12, y + 12, PINK, true);
         text(context, NexusData.t("A clean social layer for Minecraft.", "Социальный интерфейс для Minecraft."), x + 12, y + 28, 0xFFE7E0E8, false);
         text(context, NexusData.t("No NEXUS account or registration.", "Без аккаунтов и регистрации NEXUS."), x + 12, y + 42, MUTED, false);
@@ -323,6 +324,20 @@ public final class NexusScreen extends Screen {
         text(context, number, x + 8, y + 5, RED, true);
         text(context, fit(title, Math.max(8, contentW / 6)), x + 30, y + 5, 0xFFF2EDF5, true);
         text(context, fit(subtitle, Math.max(12, contentW / 5)), x + 30, y + 17, MUTED, false);
+    }
+
+    private void renderInputSurfaces(DrawContext context) {
+        if (friendInput != null && page == Page.FRIENDS) drawInputSurface(context, friendInput);
+        if (recipientInput != null && page == Page.CHAT) drawInputSurface(context, recipientInput);
+        if (messageInput != null && page == Page.CHAT) drawInputSurface(context, messageInput);
+    }
+
+    private void drawInputSurface(DrawContext context, TextFieldWidget field) {
+        int x = field.getX(), y = field.getY();
+        context.fill(x - 2, y - 1, x + field.getWidth() + 2, y + field.getHeight() + 1, 0xFF211A24);
+        context.fill(x - 2, y - 1, x + field.getWidth() + 2, y, 0xFF48313D);
+        context.fill(x - 2, y + field.getHeight(), x + field.getWidth() + 2, y + field.getHeight() + 1, 0xFF0A090E);
+        context.fill(x - 2, y - 1, x - 1, y + field.getHeight() + 1, 0xFF8E2A45);
     }
 
     private void drawSkinHead(DrawContext context, int x, int y, int pixelSize) {
