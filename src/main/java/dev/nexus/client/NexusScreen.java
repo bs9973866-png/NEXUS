@@ -65,7 +65,6 @@ public final class NexusScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        renderBackground(context, mouseX, mouseY, delta);
         context.fill(0, 0, width, height, 0x9907070D);
         context.fill(panelX, panelY, panelX + panelW, panelY + panelH, 0xFF101018);
         context.fill(panelX, panelY, panelX + panelW, panelY + 3, 0xFFE34264);
