@@ -344,7 +344,7 @@ public final class NexusScreen extends Screen {
 
     private void text(DrawContext context, String value, int x, int y, int color, boolean bold) {
         String fitted = value == null ? "" : value;
-        Text label = Text.literal(fitted).styled(style -> style.withFont(UI_FONT));
+        Text label = Text.literal(fitted).styled(style -> style.withFont(new StyleSpriteSource.Font(UI_FONT)));
         if (bold) label = label.copy().formatted(net.minecraft.util.Formatting.BOLD);
         context.drawTextWithShadow(textRenderer, label, x, y, color);
     }
