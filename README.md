@@ -1,51 +1,43 @@
 # NEXUS
 
-A client-side social mod for Minecraft Java Edition **1.21.11**, Fabric, Java 21.
+A client-side social GUI for Minecraft Java **1.21.11**, Fabric, Java 21.
 
-## Current status
+NEXUS has no separate NEXUS account or registration flow. It uses your existing Minecraft nickname and stores the contact list/settings locally.
 
-This repository is the initial implementation, not a finished Essential replacement.
+## Included in this build
 
-Implemented in this starter:
-- Right Shift opens the custom NEXUS menu.
-- Dark red/pink UI with Overview, Friends, Worlds, Voice, Skins and Emotes pages.
-- Local skin library with PNG validation and a hard limit of 10 saved skin files.
-- GitHub Actions build workflow that uploads the built JAR as an artifact.
+- Right Shift opens the NEXUS overlay.
+- NEXUS button is injected into the main menu and pause menu.
+- Custom dark, red-accented UI with a compact uniform font face instead of the standard default UI font.
+- Russian and English interface toggle, saved locally.
+- Local nickname contact list (up to 100 entries, no registration).
+- Friend-request message and direct messages sent using the current server's `/msg` command.
+- Local outgoing-message history per contact. Replies are handled by the server and appear in normal Minecraft chat.
+- Skin vault stores up to 10 validated 64x64 or legacy 64x32 PNG files.
+- Selected skin face preview inside profile and skin library.
+- GitHub Actions builds the mod JAR and sources JAR.
 
-Not implemented yet:
-- Public world hosting through an internet tunnel/relay.
-- Friend accounts, friend requests and online presence.
-- Real voice transport and proximity audio.
-- Applying the selected local skin to the player model or syncing skins to other players.
-- Network-synchronized emote animations and cosmetic rendering.
+## Important limits
 
-These require a trusted relay/service and additional networking/rendering integration. The UI intentionally labels unavailable network features instead of pretending they work.
+This is a **client-only** mod. The friend list is local, not a global account/presence service. Friend requests and messages can only reach users on the current server when that server supports `/msg`; cross-server messaging and online presence are not configured. Incoming replies are shown by Minecraft's normal chat and are not mirrored into the NEXUS thread history.
+
+Imported skins are previewed and stored locally. Selecting one does not change the official Minecraft session skin or force other players to see it. That requires a skin service/server integration. Public world hosting/tunnelling, voice transport, and synchronized emotes/cosmetics are not included in this client-only build and are presented as future service integrations rather than working buttons.
 
 ## Build
 
-Requires JDK 21 and Gradle 9.6.1 (or use the GitHub Actions workflow).
+Use JDK 21 and Gradle 9.6.1, or open the repository's **Actions** tab and download the artifact from the latest successful **Build NEXUS** run.
 
 ```bash
-gradle --no-daemon build
+gradle --no-daemon clean build
 ```
 
-The mod JAR will be under `build/libs/`.
+The runtime JAR is in `build/libs/nexus-0.1.0.jar`. The `nexus-0.1.0-sources.jar` is source code for developers and is not the file to install.
 
 ## Install
 
-Copy the built `nexus-*.jar` into the Minecraft `mods` folder alongside Fabric Loader and Fabric API for 1.21.11.
+Copy only the runtime `nexus-0.1.0.jar` to the Minecraft instance's `mods` folder alongside Fabric Loader and Fabric API for Minecraft 1.21.11.
 
-Open the NEXUS menu with **Right Shift**.
+## Local files
 
-## Skin storage
-
-Imported PNG files are saved locally to `.minecraft/nexus/skins`. The import dialog accepts 64x64 skins and legacy 64x32 skins, up to ten files.
-
-## Roadmap
-
-1. Verify the CI build and launch on Minecraft 1.21.11.
-2. Add skin texture registration and player-skin override.
-3. Add friend identity, invites and presence through a small relay backend.
-4. Integrate proximity voice transport.
-5. Implement secure tunnel hosting and connection lifecycle.
-6. Add synced emotes, cosmetic rendering, and privacy controls.
+- Skin PNGs: `.minecraft/nexus/skins`
+- Contacts, chat history, and language: `.minecraft/config/nexus/`
