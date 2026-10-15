@@ -6,6 +6,7 @@ import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Text;
+import net.minecraft.text.StyleSpriteSource;
 import net.minecraft.util.Identifier;
 
 public final class NexusButton extends ClickableWidget {
@@ -13,7 +14,7 @@ public final class NexusButton extends ClickableWidget {
     private final Runnable action;
 
     public NexusButton(int x, int y, int width, int height, String label, Runnable action) {
-        super(x, y, width, height, Text.literal(label).styled(style -> style.withFont(UI_FONT)));
+        super(x, y, width, height, Text.literal(label).styled(style -> style.withFont(new StyleSpriteSource.Font(UI_FONT))));
         this.action = action;
     }
 
