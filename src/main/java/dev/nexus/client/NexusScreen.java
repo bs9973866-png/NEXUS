@@ -15,7 +15,6 @@ public final class NexusScreen extends Screen {
 
     private static final Identifier UI_FONT = Identifier.of("minecraft", "uniform");
     private static final int BG = 0xFF0A0A10;
-    private static final int PANEL = 0xFF12121B;
     private static final int PANEL_ALT = 0xFF191923;
     private static final int RED = 0xFFE84B68;
     private static final int PINK = 0xFFFF8195;
@@ -51,12 +50,12 @@ public final class NexusScreen extends Screen {
         int navY = panelY + 60;
         int navW = sidebarW - 20;
         int navH = 19;
-        addNav("01  " + NexusData.t("HOME", "ГЛАВНАЯ"), Page.HOME, navX, navY, navW, navH, 0);
-        addNav("02  " + NexusData.t("FRIENDS", "ДРУЗЬЯ"), Page.FRIENDS, navX, navY + 22, navW, navH, 1);
-        addNav("03  " + NexusData.t("MESSAGES", "СООБЩЕНИЯ"), Page.CHAT, navX, navY + 44, navW, navH, 2);
-        addNav("04  " + NexusData.t("PROFILE", "ПРОФИЛЬ"), Page.PROFILE, navX, navY + 66, navW, navH, 3);
-        addNav("05  " + NexusData.t("SKINS", "СКИНЫ"), Page.SKINS, navX, navY + 88, navW, navH, 4);
-        addNav("06  " + NexusData.t("MORE", "ЕЩЁ"), Page.MORE, navX, navY + 110, navW, navH, 5);
+        addNav("01  " + NexusData.t("HOME", "ГЛАВНАЯ"), Page.HOME, navX, navY, navW, navH);
+        addNav("02  " + NexusData.t("FRIENDS", "ДРУЗЬЯ"), Page.FRIENDS, navX, navY + 22, navW, navH);
+        addNav("03  " + NexusData.t("MESSAGES", "СООБЩЕНИЯ"), Page.CHAT, navX, navY + 44, navW, navH);
+        addNav("04  " + NexusData.t("PROFILE", "ПРОФИЛЬ"), Page.PROFILE, navX, navY + 66, navW, navH);
+        addNav("05  " + NexusData.t("SKINS", "СКИНЫ"), Page.SKINS, navX, navY + 88, navW, navH);
+        addNav("06  " + NexusData.t("MORE", "ЕЩЁ"), Page.MORE, navX, navY + 110, navW, navH);
 
         addDrawableChild(new NexusButton(panelX + panelW - 86, panelY + panelH - 29, 76, 19,
                 NexusData.t("CLOSE", "ЗАКРЫТЬ"), this::close));
@@ -70,7 +69,7 @@ public final class NexusScreen extends Screen {
         }
     }
 
-    private void addNav(String label, Page target, int x, int y, int w, int h, int index) {
+    private void addNav(String label, Page target, int x, int y, int w, int h) {
         addDrawableChild(new NexusButton(x, y, w, h, label, () -> {
             page = target;
             notice = "";
@@ -174,7 +173,7 @@ public final class NexusScreen extends Screen {
     }
 
     private void buildMorePage() {
-        int y = panelY + panelH - 53;
+        int y = panelY + panelH - 52;
         addDrawableChild(new NexusButton(contentX, y, Math.min(170, contentW), 19,
                 NexusData.t("LANGUAGE: " + NexusData.language().toUpperCase(), "ЯЗЫК: " + NexusData.language().toUpperCase()), () -> {
             NexusData.toggleLanguage();
@@ -229,15 +228,15 @@ public final class NexusScreen extends Screen {
         text(context, NexusData.t("A clean social layer for Minecraft.", "Социальный интерфейс для Minecraft."), x + 12, y + 28, 0xFFE7E0E8, false);
         text(context, NexusData.t("No NEXUS account or registration.", "Без аккаунтов и регистрации NEXUS."), x + 12, y + 42, MUTED, false);
 
-        int tileY = y + 75;
+        int tileY = y + 56;
         int gap = 7;
         int tileW = Math.max(64, (contentW - gap) / 2);
-        dashboardTile(context, x, tileY, tileW, 42, "01", NexusData.t("FRIENDS", "ДРУЗЬЯ"), NexusData.friends().size() + " " + NexusData.t("saved locally", "сохранено локально"));
-        dashboardTile(context, x + tileW + gap, tileY, tileW, 42, "02", NexusData.t("MESSAGES", "СООБЩЕНИЯ"), NexusData.t("via server /msg", "через /msg сервера"));
-        int secondY = tileY + 49;
-        dashboardTile(context, x, secondY, tileW, 42, "03", NexusData.t("SKINS", "СКИНЫ"), SkinLibrary.listSkins().size() + " / " + SkinLibrary.MAX_SKINS);
-        dashboardTile(context, x + tileW + gap, secondY, tileW, 42, "04", NexusData.t("PROFILE", "ПРОФИЛЬ"), NexusData.t("no login required", "вход не нужен"));
-        text(context, NexusData.t("Select a section on the left to get started.", "Выбери раздел слева, чтобы начать."), x, secondY + 56, MUTED, false);
+        dashboardTile(context, x, tileY, tileW, 30, "01", NexusData.t("FRIENDS", "ДРУЗЬЯ"), NexusData.friends().size() + " " + NexusData.t("saved locally", "сохранено локально"));
+        dashboardTile(context, x + tileW + gap, tileY, tileW, 30, "02", NexusData.t("MESSAGES", "СООБЩЕНИЯ"), NexusData.t("via server /msg", "через /msg сервера"));
+        int secondY = tileY + 36;
+        dashboardTile(context, x, secondY, tileW, 30, "03", NexusData.t("SKINS", "СКИНЫ"), SkinLibrary.listSkins().size() + " / " + SkinLibrary.MAX_SKINS);
+        dashboardTile(context, x + tileW + gap, secondY, tileW, 30, "04", NexusData.t("PROFILE", "ПРОФИЛЬ"), NexusData.t("no login required", "вход не нужен"));
+        text(context, NexusData.t("Select a section on the left to get started.", "Выбери раздел слева, чтобы начать."), x, secondY + 36, MUTED, false);
     }
 
     private void dashboardTile(DrawContext context, int x, int y, int w, int h, String number, String heading, String sub) {
@@ -245,7 +244,7 @@ public final class NexusScreen extends Screen {
         context.fill(x, y, x + w, y + 1, 0xFF39303B);
         text(context, number, x + 7, y + 7, RED, true);
         text(context, fit(heading, Math.max(5, w / 6)), x + 28, y + 7, 0xFFF2EDF5, true);
-        text(context, fit(sub, Math.max(7, w / 5)), x + 8, y + 25, MUTED, false);
+        text(context, fit(sub, Math.max(7, w / 5)), x + 8, y + 18, MUTED, false);
     }
 
     private void renderFriends(DrawContext context) {
@@ -267,7 +266,7 @@ public final class NexusScreen extends Screen {
         text(context, target.isBlank() ? NexusData.t("Choose a contact or type a nickname.", "Выбери контакт или введи ник.") : "@" + target, x, y + 17, 0xFFEAE5EE, false);
         context.fill(x, y + 52, x + contentW, y + 53, 0xFF30232D);
         int historyY = y + 78;
-        List<String> history = NexusData.recentOutgoing(target, 5);
+        List<String> history = NexusData.recentOutgoing(target, 4);
         for (String line : history) {
             text(context, fit("→ " + line, Math.max(15, contentW - 4)), x, historyY, MUTED, false);
             historyY += 14;
@@ -306,17 +305,16 @@ public final class NexusScreen extends Screen {
     }
 
     private void renderMore(DrawContext context) {
-        int x = contentX, y = contentY + 6;
+        int x = contentX, y = contentY + 5;
         text(context, NexusData.t("EXPERIMENTAL FEATURES", "ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ"), x, y, PINK, true);
-        y += 24;
+        y += 18;
         statusRow(context, x, y, "01", NexusData.t("WORLD INVITES", "ПРИГЛАШЕНИЯ В МИР"), NexusData.t("Needs a public tunnel/relay server.", "Нужен сервер туннеля/ретрансляции."));
-        y += 32;
+        y += 28;
         statusRow(context, x, y, "02", NexusData.t("VOICE CHAT", "ГОЛОСОВОЙ ЧАТ"), NexusData.t("Audio transport is not connected.", "Передача голоса не подключена."));
-        y += 32;
+        y += 28;
         statusRow(context, x, y, "03", NexusData.t("EMOTES & COSMETICS", "ЭМОУТЫ И КОСМЕТИКА"), NexusData.t("UI concepts only; no remote animations.", "Пока интерфейс; синхронизации анимаций нет."));
-        y += 40;
+        y += 32;
         text(context, NexusData.t("INTERFACE LANGUAGE", "ЯЗЫК ИНТЕРФЕЙСА"), x, y, PINK, true);
-        text(context, NexusData.language().toUpperCase() + "  •  " + NexusData.t("click the button below to switch", "нажми кнопку ниже, чтобы сменить"), x, y + 15, MUTED, false);
     }
 
     private void statusRow(DrawContext context, int x, int y, String number, String title, String subtitle) {
