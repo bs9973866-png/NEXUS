@@ -31,6 +31,15 @@ public final class NexusScreen extends Screen {
         addDrawableChild(nav("Emotes", Page.EMOTES, navX, navY + 155, navW, navH));
         int contentX = panelX + 150, contentW = panelW - 170, actionY = panelY + 245;
         if (page == Page.SKINS) {
+            List<String> storedSkins = SkinLibrary.listSkins();
+            int rowY = panelY + 112;
+            for (String skin : storedSkins.stream().limit(7).toList()) {
+                final String skinName = skin;
+                addDrawableChild(ButtonWidget.builder(Text.literal((skinName.equals(SkinLibrary.activeSkin()) ? "✓ " : "") + skinName),
+                                b -> { SkinLibrary.select(skinName); notice = "Selected " + skinName + " (local selection only)."; clearAndInit(); })
+                        .dimensions(contentX, rowY, Math.max(80, Math.min(230, contentW)), 20).build());
+                rowY += 20;
+            }
             addDrawableChild(ButtonWidget.builder(Text.literal("Import PNG"), b -> { notice = SkinLibrary.importSkin(); clearAndInit(); })
                     .dimensions(contentX, actionY, Math.min(140, contentW), 24).build());
         } else if (page == Page.WORLDS) {
