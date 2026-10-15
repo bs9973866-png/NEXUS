@@ -173,8 +173,8 @@ public final class NexusScreen extends Screen {
     }
 
     private void buildMorePage() {
-        int y = contentY + 38;
-        addDrawableChild(new NexusButton(contentX, y + 6, Math.min(170, contentW), 21,
+        int y = panelY + panelH - 53;
+        addDrawableChild(new NexusButton(contentX, y, Math.min(170, contentW), 19,
                 NexusData.t("LANGUAGE: " + NexusData.language().toUpperCase(), "ЯЗЫК: " + NexusData.language().toUpperCase()), () -> {
             NexusData.toggleLanguage();
             notice = NexusData.t("Language changed to English.", "Язык изменён на русский.");
@@ -252,7 +252,7 @@ public final class NexusScreen extends Screen {
         text(context, NexusData.t("CONTACT LIST", "СПИСОК КОНТАКТОВ"), x, y, PINK, true);
         text(context, NexusData.t("Requests are sent as a normal /msg on your current server.", "Заявка отправляется обычным /msg на текущем сервере."), x, y + 17, MUTED, false);
         if (drawNothingListHint) {
-            text(context, NexusData.t("No contacts yet. Enter a nickname below.", "Пока нет контактов. Введи ник ниже."), x, y + 42, 0xFFE7E0E8, false);
+            text(context, NexusData.t("No contacts yet. Enter a nickname below.", "Пока нет контактов. Введи ник ниже."), x, y + 66, 0xFFE7E0E8, false);
         }
         context.fill(x - 1, panelY + panelH - 80, x + contentW, panelY + panelH - 79, 0xFF33232E);
         text(context, NexusData.t("ADD A FRIEND", "ДОБАВИТЬ ДРУГА"), x, panelY + panelH - 72, PINK, true);
@@ -264,8 +264,8 @@ public final class NexusScreen extends Screen {
         String target = recipientInput == null ? selectedFriend : recipientInput.getText().trim();
         text(context, NexusData.t("PRIVATE MESSAGE", "ЛИЧНОЕ СООБЩЕНИЕ"), x, y, PINK, true);
         text(context, target.isBlank() ? NexusData.t("Choose a contact or type a nickname.", "Выбери контакт или введи ник.") : "@" + target, x, y + 17, 0xFFEAE5EE, false);
-        context.fill(x, y + 32, x + contentW, y + 33, 0xFF30232D);
-        int historyY = y + 41;
+        context.fill(x, y + 52, x + contentW, y + 53, 0xFF30232D);
+        int historyY = y + 78;
         List<String> history = NexusData.recentOutgoing(target, 5);
         for (String line : history) {
             text(context, fit("→ " + line, Math.max(15, contentW - 4)), x, historyY, MUTED, false);
@@ -309,9 +309,9 @@ public final class NexusScreen extends Screen {
         text(context, NexusData.t("EXPERIMENTAL FEATURES", "ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ"), x, y, PINK, true);
         y += 24;
         statusRow(context, x, y, "01", NexusData.t("WORLD INVITES", "ПРИГЛАШЕНИЯ В МИР"), NexusData.t("Needs a public tunnel/relay server.", "Нужен сервер туннеля/ретрансляции."));
-        y += 36;
+        y += 32;
         statusRow(context, x, y, "02", NexusData.t("VOICE CHAT", "ГОЛОСОВОЙ ЧАТ"), NexusData.t("Audio transport is not connected.", "Передача голоса не подключена."));
-        y += 36;
+        y += 32;
         statusRow(context, x, y, "03", NexusData.t("EMOTES & COSMETICS", "ЭМОУТЫ И КОСМЕТИКА"), NexusData.t("UI concepts only; no remote animations.", "Пока интерфейс; синхронизации анимаций нет."));
         y += 40;
         text(context, NexusData.t("INTERFACE LANGUAGE", "ЯЗЫК ИНТЕРФЕЙСА"), x, y, PINK, true);
@@ -319,8 +319,8 @@ public final class NexusScreen extends Screen {
     }
 
     private void statusRow(DrawContext context, int x, int y, String number, String title, String subtitle) {
-        context.fill(x, y, x + contentW, y + 30, PANEL_ALT);
-        context.fill(x, y, x + 2, y + 30, RED);
+        context.fill(x, y, x + contentW, y + 28, PANEL_ALT);
+        context.fill(x, y, x + 2, y + 28, RED);
         text(context, number, x + 8, y + 5, RED, true);
         text(context, fit(title, Math.max(8, contentW / 6)), x + 30, y + 5, 0xFFF2EDF5, true);
         text(context, fit(subtitle, Math.max(12, contentW / 5)), x + 30, y + 17, MUTED, false);
